@@ -1,26 +1,47 @@
 package ar.edu.itba.pod.server;
 
-import io.grpc.ServerBuilder;
+import com.hazelcast.config.*;
+import com.hazelcast.core.Hazelcast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.util.Collections;
 
 public class Server {
-    private static Logger logger = LoggerFactory.getLogger(Server.class);
+    private static final Logger logger = LoggerFactory.getLogger(Server.class);
+    public static void main(String[] args) {
+        logger.info("hz-config Server Starting ...");
 
-    public static void main(String[] args) throws InterruptedException, IOException {
-        logger.info(" Server Starting ...");
+        // Config
+        Config config = new Config();
 
-        int port = 50051;
-        io.grpc.Server server = ServerBuilder.forPort(port)
-                .build();
-        server.start();
-        logger.info("Server started, listening on " + port);
-        server.awaitTermination();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            logger.info("Shutting down gRPC server since JVM is shutting down");
-            server.shutdown();
-            logger.info("Server shut down");
-        }));
-    }}
+        // Group Config
+        GroupConfig groupConfig = new GroupConfig()
+                .setName("g10")
+                .setPassword("g10-pass");
+
+        config.setGroupConfig(groupConfig);
+
+        // Network Config
+        MulticastConfig multicastConfig = new MulticastConfig();
+
+        JoinConfig joinConfig = new JoinConfig()
+                .setMulticastConfig(multicastConfig);
+
+        InterfacesConfig interfacesConfig = new InterfacesConfig()
+                .setInterfaces(Collections.singletonList("192.168.1.*"))
+                .setEnabled(true);
+
+        NetworkConfig networkConfig = new NetworkConfig()
+                .setInterfaces(interfacesConfig)
+                .setJoin(joinConfig);
+
+        config.setNetworkConfig(networkConfig);
+
+        config.getMultiMapConfig("multiMap").setValueCollectionType(MultiMapConfig.ValueCollectionType.LIST);
+
+        // Start cluster
+        Hazelcast.newHazelcastInstance(config);
+    }
+}
+
