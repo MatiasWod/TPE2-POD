@@ -1,0 +1,9 @@
+api/target/*
+client/target/*
+server/target/*
+
+.idea/*
+
+
+query*
+
