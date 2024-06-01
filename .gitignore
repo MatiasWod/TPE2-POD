@@ -3,7 +3,3 @@ client/target/*
 server/target/*
 
 .idea/*
-
-
-query*
-
