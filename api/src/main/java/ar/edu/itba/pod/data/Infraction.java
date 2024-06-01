@@ -11,10 +11,10 @@ public class Infraction implements DataSerializable {
     private String description;
 
     public Infraction() {
-
+        //Serialization
     }
 
-    private Infraction(int code, String description) {
+    private Infraction(final int code, final String description) {
         this.code = code;
         this.description = description;
     }
