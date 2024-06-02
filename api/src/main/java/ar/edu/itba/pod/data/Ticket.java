@@ -17,7 +17,7 @@ public class Ticket implements DataSerializable {
         //Serialization
     }
 
-    private Ticket(final String plate, final int infractionCode, final String countyName, final int fineAmount) {
+    public Ticket(final String plate, final int infractionCode, final String countyName, final int fineAmount) {
         this.plate = plate;
         this.infractionCode = infractionCode;
         this.countyName = countyName;

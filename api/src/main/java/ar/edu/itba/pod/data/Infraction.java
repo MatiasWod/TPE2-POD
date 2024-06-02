@@ -14,7 +14,7 @@ public class Infraction implements DataSerializable {
         //Serialization
     }
 
-    private Infraction(final int code, final String description) {
+    public Infraction(final int code, final String description) {
         this.code = code;
         this.description = description;
     }
