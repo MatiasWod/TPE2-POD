@@ -39,7 +39,7 @@ public class Server {
 
         config.setNetworkConfig(networkConfig);
 
-        config.getMultiMapConfig("multiMap").setValueCollectionType(MultiMapConfig.ValueCollectionType.LIST);
+        config.getMultiMapConfig("g10-namespace-multimap").setValueCollectionType(MultiMapConfig.ValueCollectionType.LIST);
 
         // Start cluster
         Hazelcast.newHazelcastInstance(config);

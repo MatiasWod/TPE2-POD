@@ -6,20 +6,23 @@ import com.hazelcast.mapreduce.ReducerFactory;
 public class Query1ReducerFactory implements ReducerFactory<String,Integer,Integer> {
     @Override
     public Reducer<Integer, Integer> newReducer(String s) {
-        return new Query1Reducer();
-    }
+        return new Reducer<>() {
+            private int sum;
 
-    private class Query1Reducer extends Reducer<Integer,Integer>{
-        private int sum = 0;
+            @Override
+            public void beginReduce () {
+                sum = 0;
+            }
 
-        @Override
-        public void reduce(Integer integer) {
-            sum += integer;
-        }
+            @Override
+            public void reduce(Integer value) {
+                sum += value;
+            }
 
-        @Override
-        public Integer finalizeReduce() {
-            return sum;
-        }
+            @Override
+            public Integer finalizeReduce() {
+                return sum;
+            }
+        };
     }
 }

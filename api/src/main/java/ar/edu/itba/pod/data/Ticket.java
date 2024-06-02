@@ -11,13 +11,13 @@ public class Ticket implements DataSerializable {
     private String plate;
     private int infractionCode;
     private String countyName;
-    private int fineAmount;
+    private double fineAmount;
 
     public Ticket() {
         //Serialization
     }
 
-    public Ticket(final String plate, final int infractionCode, final String countyName, final int fineAmount) {
+    public Ticket(final String plate, final int infractionCode, final String countyName, final double fineAmount) {
         this.plate = plate;
         this.infractionCode = infractionCode;
         this.countyName = countyName;
@@ -36,7 +36,7 @@ public class Ticket implements DataSerializable {
         return countyName;
     }
 
-    public int getFineAmount() {
+    public double getFineAmount() {
         return fineAmount;
     }
 
@@ -45,7 +45,7 @@ public class Ticket implements DataSerializable {
         objectDataOutput.writeUTF(plate);
         objectDataOutput.writeInt(infractionCode);
         objectDataOutput.writeUTF(countyName);
-        objectDataOutput.writeInt(fineAmount);
+        objectDataOutput.writeDouble(fineAmount);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class Ticket implements DataSerializable {
         plate = objectDataInput.readUTF();
         infractionCode = objectDataInput.readInt();;
         countyName = objectDataInput.readUTF();
-        fineAmount = objectDataInput.readInt();;
+        fineAmount = objectDataInput.readDouble();;
     }
 }

@@ -9,7 +9,7 @@ public enum CityCSVDatasource {
     CHI{
         @Override
         public Ticket ticketFromCSV(String[] csvLine) {
-            return new Ticket(UUID.fromString(csvLine[1]).toString(),Integer.parseInt(csvLine[2]),csvLine[5],Integer.parseInt(csvLine[4]));
+            return new Ticket(UUID.fromString(csvLine[1]).toString(),Integer.parseInt(csvLine[2]),csvLine[5],Double.parseDouble(csvLine[4]));
         }
 
         @Override
@@ -20,7 +20,7 @@ public enum CityCSVDatasource {
     NYC{
         @Override
         public Ticket ticketFromCSV(String[] csvLine) {
-            return new Ticket(csvLine[0],Integer.parseInt(csvLine[2]),csvLine[4],Integer.parseInt(csvLine[3]));
+            return new Ticket(csvLine[0],Integer.parseInt(csvLine[2]),csvLine[4],Double.parseDouble(csvLine[3]));
         }
 
         @Override
