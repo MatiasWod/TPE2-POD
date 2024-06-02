@@ -9,7 +9,8 @@ public enum CityCSVDatasource {
     CHI{
         @Override
         public Ticket ticketFromCSV(String[] csvLine) {
-            return new Ticket(UUID.fromString(csvLine[1]).toString(),csvLine[2],csvLine[5],Double.parseDouble(csvLine[4]));
+            //TODO verificar que la patente se guarda correctamente
+            return new Ticket(UUID.nameUUIDFromBytes(csvLine[1].getBytes()).toString(),csvLine[2],csvLine[5],Double.parseDouble(csvLine[4]));
         }
 
         @Override

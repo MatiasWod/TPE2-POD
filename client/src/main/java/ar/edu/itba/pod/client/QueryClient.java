@@ -170,7 +170,6 @@ public abstract class QueryClient {
                 CityCSVDatasource cityCSVDatasource = CityCSVDatasource.valueOf(city);
                 lines.forEach(line -> {
                     String[] fields = line.split(";");
-
                     multiMap.put(
                             fields[2],
                             cityCSVDatasource.ticketFromCSV(fields)
