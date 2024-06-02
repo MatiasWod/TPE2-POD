@@ -6,7 +6,7 @@ import com.hazelcast.mapreduce.CombinerFactory;
 public class Query1CombinerFactory implements CombinerFactory<String,Integer,Integer> {
     @Override
     public Combiner<Integer, Integer> newCombiner(String s) {
-        return null;
+        return new Query1Combiner();
     }
 
     private class Query1Combiner extends Combiner<Integer,Integer>{

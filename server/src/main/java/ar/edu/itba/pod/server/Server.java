@@ -22,6 +22,7 @@ public class Server {
 
         config.setGroupConfig(groupConfig);
 
+
         // Network Config
         MulticastConfig multicastConfig = new MulticastConfig();
 
@@ -29,7 +30,7 @@ public class Server {
                 .setMulticastConfig(multicastConfig);
 
         InterfacesConfig interfacesConfig = new InterfacesConfig()
-                .setInterfaces(Collections.singletonList("192.168.1.*"))
+                .setInterfaces(Collections.singletonList("127.0.0.*"))
                 .setEnabled(true);
 
         NetworkConfig networkConfig = new NetworkConfig()

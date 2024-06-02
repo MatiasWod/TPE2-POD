@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class Query1Client {
-    private static final Logger logger = LoggerFactory.getLogger(Client.class);
+    private static final Logger logger = LoggerFactory.getLogger(Query1Client.class);
     private static final int QUERY_NUMBER = 1;
     private static final String PROPERTY_ADDRESSES = "addresses";
     private static final String PROPERTY_CITY = "city";
