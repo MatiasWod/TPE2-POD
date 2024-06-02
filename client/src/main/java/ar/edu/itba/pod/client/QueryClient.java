@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public abstract class QueryClient {
+    //TODO escribir el arxhivo con los tiempos
     private static final Logger logger = LoggerFactory.getLogger(QueryClient.class);
     private static final String PROPERTY_ADDRESSES = "addresses";
     private static final String PROPERTY_CITY = "city";
@@ -48,17 +49,24 @@ public abstract class QueryClient {
         try{
             checkArguments();
             this.hazelcastInstance = ClientMethods.clientConfiguration(this.addresses);
+            logger.info("Starting data load.");
             loadData();
+            logger.info("Finished data loading.");
+            logger.info("Starting map-reduce job.");
             runQuery();
+            logger.info("Finished map-reduce job.");
         }catch (IllegalArgumentException e) {
             System.err.println("Oops! Invalid arguments were sent:\n" + e.getMessage());
+            logger.error("Invalid arguments were sent.");
             status = 64;
         }
         catch (ExecutionException | InterruptedException | IOException e){
 
         }
         finally {
+            logger.info("Starting data destruction.");
             destroyData();
+            logger.info("Data successfully destroyed.");
             if (this.hazelcastInstance != null){
                 this.hazelcastInstance.shutdown();
             }
@@ -145,6 +153,7 @@ public abstract class QueryClient {
             executorService.awaitTermination(1, TimeUnit.MINUTES);
         }
         catch (InterruptedException e){
+            logger.error("Interrupted data load.");
             System.exit(1);
         }
 
@@ -177,7 +186,8 @@ public abstract class QueryClient {
                 });
             }
             catch (IOException e){
-
+                logger.error("Error loading data.");
+                logger.error(e.getMessage());
             }
         }
     }
@@ -210,7 +220,8 @@ public abstract class QueryClient {
                 });
             }
             catch (IOException e){
-
+                logger.error("Error loading data.");
+                logger.error(e.getMessage());
             }
         }
     }

@@ -39,6 +39,8 @@ public class Server {
 
         config.setNetworkConfig(networkConfig);
 
+        config.setProperty("hazelcast.logging.type","none");
+
         config.getMultiMapConfig("g10-namespace-multimap").setValueCollectionType(MultiMapConfig.ValueCollectionType.LIST);
 
         // Start cluster
