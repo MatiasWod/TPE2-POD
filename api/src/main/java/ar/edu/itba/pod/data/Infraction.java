@@ -7,19 +7,19 @@ import com.hazelcast.nio.serialization.DataSerializable;
 import java.io.IOException;
 
 public class Infraction implements DataSerializable {
-    private int code;
+    private String code;
     private String description;
 
     public Infraction() {
         //Serialization
     }
 
-    public Infraction(final int code, final String description) {
+    public Infraction(final String code, final String description) {
         this.code = code;
         this.description = description;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
@@ -29,13 +29,13 @@ public class Infraction implements DataSerializable {
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeInt(code);
+        out.writeUTF(code);
         out.writeUTF(description);
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        code = in.readInt();
+        code = in.readUTF();
         description = in.readUTF();
     }
 }

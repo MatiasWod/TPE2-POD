@@ -9,15 +9,15 @@ import com.hazelcast.mapreduce.Mapper;
 
 import java.util.Map;
 
-public class Query1Mapper implements Mapper<Integer, Ticket, String, Integer>,HazelcastInstanceAware {
+public class Query1Mapper implements Mapper<String, Ticket, String, Integer>,HazelcastInstanceAware {
 
-    private transient Map<Integer,Infraction> infractionMap;
+    private transient Map<String,Infraction> infractionMap;
 
     public Query1Mapper() {
     }
 
     @Override
-    public void map(Integer n, Ticket ticket, Context<String, Integer> context) {
+    public void map(String s, Ticket ticket, Context<String, Integer> context) {
         if(!infractionMap.containsKey(ticket.getInfractionCode())){
             return;
         }

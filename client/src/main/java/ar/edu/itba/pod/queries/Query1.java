@@ -23,14 +23,14 @@ public class Query1 extends QueryClient {
     @Override
     public void runQuery() throws ExecutionException, InterruptedException, IOException {
         final JobTracker jobTracker = getHazelcastInstance().getJobTracker("g10-namespace");
-        final KeyValueSource<Integer, Ticket> keyValueSource = KeyValueSource.fromMultiMap(getHazelcastInstance().getMultiMap("g10-namespace-multimap"));
-        Job<Integer,Ticket> job = jobTracker.newJob(keyValueSource);
+        final KeyValueSource<String, Ticket> keyValueSource = KeyValueSource.fromMultiMap(getHazelcastInstance().getMultiMap("g10-namespace-multimap"));
+        Job<String,Ticket> job = jobTracker.newJob(keyValueSource);
         Map<String,Integer> reducedData = job
                 .mapper(new Query1Mapper())
                 .reducer(new Query1ReducerFactory())
                 .submit()
                 .get();
-        Map<Integer,Infraction> infractionMap = getHazelcastInstance().getMap("g10-namespace-map");
+        Map<String,Infraction> infractionMap = getHazelcastInstance().getMap("g10-namespace-map");
         Set<Query1Result> results = new TreeSet<>();
         for (Map.Entry<String,Integer> entry : reducedData.entrySet()) {
             results.add(new Query1Result(entry.getKey(), entry.getValue()));

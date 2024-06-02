@@ -151,11 +151,11 @@ public abstract class QueryClient {
     }
 
     private static class LoadTicketsRunnable implements Runnable{
-        private final MultiMap<Integer, Ticket> multiMap;
+        private final MultiMap<String, Ticket> multiMap;
         private final String city;
         private final Path path;
 
-        public LoadTicketsRunnable(MultiMap<Integer, Ticket> multiMap, String city, Path path) {
+        public LoadTicketsRunnable(MultiMap<String, Ticket> multiMap, String city, Path path) {
             this.multiMap = multiMap;
             this.city = city;
             this.path = path;
@@ -165,14 +165,14 @@ public abstract class QueryClient {
         public void run() {
             try(
                     Stream<String> lines = Files.lines(path).skip(1).parallel()
-                    )
+            )
             {
                 CityCSVDatasource cityCSVDatasource = CityCSVDatasource.valueOf(city);
                 lines.forEach(line -> {
                     String[] fields = line.split(";");
 
                     multiMap.put(
-                            Integer.parseInt(fields[2]),
+                            fields[2],
                             cityCSVDatasource.ticketFromCSV(fields)
                     );
                 });
@@ -184,11 +184,11 @@ public abstract class QueryClient {
     }
 
     private static class LoadInfractionsRunnable implements Runnable{
-        private final Map<Integer, Infraction> map;
+        private final Map<String, Infraction> map;
         private final String city;
         private final Path path;
 
-        public LoadInfractionsRunnable(Map<Integer, Infraction> map, String city, Path path) {
+        public LoadInfractionsRunnable(Map<String, Infraction> map, String city, Path path) {
             this.map = map;
             this.city = city;
             this.path = path;
@@ -205,7 +205,7 @@ public abstract class QueryClient {
                     String[] fields = line.split(";");
 
                     map.put(
-                            Integer.parseInt(fields[0]),
+                            fields[0],
                             cityCSVDatasource.infractionFromCSV(fields)
                     );
                 });

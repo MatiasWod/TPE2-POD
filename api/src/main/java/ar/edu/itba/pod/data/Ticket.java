@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Ticket implements DataSerializable {
 
     private String plate;
-    private int infractionCode;
+    private String infractionCode;
     private String countyName;
     private double fineAmount;
 
@@ -17,7 +17,7 @@ public class Ticket implements DataSerializable {
         //Serialization
     }
 
-    public Ticket(final String plate, final int infractionCode, final String countyName, final double fineAmount) {
+    public Ticket(final String plate, final String infractionCode, final String countyName, final double fineAmount) {
         this.plate = plate;
         this.infractionCode = infractionCode;
         this.countyName = countyName;
@@ -28,7 +28,7 @@ public class Ticket implements DataSerializable {
         return plate;
     }
 
-    public int getInfractionCode() {
+    public String getInfractionCode() {
         return infractionCode;
     }
 
@@ -43,7 +43,7 @@ public class Ticket implements DataSerializable {
     @Override
     public void writeData(ObjectDataOutput objectDataOutput) throws IOException {
         objectDataOutput.writeUTF(plate);
-        objectDataOutput.writeInt(infractionCode);
+        objectDataOutput.writeUTF(infractionCode);
         objectDataOutput.writeUTF(countyName);
         objectDataOutput.writeDouble(fineAmount);
     }
@@ -51,7 +51,7 @@ public class Ticket implements DataSerializable {
     @Override
     public void readData(ObjectDataInput objectDataInput) throws IOException {
         plate = objectDataInput.readUTF();
-        infractionCode = objectDataInput.readInt();;
+        infractionCode = objectDataInput.readUTF();;
         countyName = objectDataInput.readUTF();
         fineAmount = objectDataInput.readDouble();;
     }
