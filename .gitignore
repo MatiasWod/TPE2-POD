@@ -3,3 +3,7 @@ client/target/*
 server/target/*
 
 .idea/*
+
+*.txt
+*.csv
+
