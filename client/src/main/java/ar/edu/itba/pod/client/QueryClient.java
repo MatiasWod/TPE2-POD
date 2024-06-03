@@ -72,7 +72,7 @@ public abstract class QueryClient {
         return hazelcastInstance;
     }
 
-    private void checkArguments() throws IllegalArgumentException{
+    protected void checkArguments() throws IllegalArgumentException{
         StringBuilder errors = new StringBuilder();
 
         String addressesArgument = System.getProperty(PROPERTY_ADDRESSES);
