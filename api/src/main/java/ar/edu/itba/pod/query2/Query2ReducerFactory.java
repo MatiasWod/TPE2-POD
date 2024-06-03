@@ -25,18 +25,53 @@ public class Query2ReducerFactory implements ReducerFactory<String, String, Top3
                 infractionsMap.put(value, infractionsMap.getOrDefault(value, 0) + 1);
                 int count = infractionsMap.get(value);
 
-                if (!top3Infractions.isInTop1(value) && count > top3Infractions.getAmountOfTicketsTop1()) {
-                    top3Infractions.setTop3(top3Infractions.getTop2());
-                    top3Infractions.setTop2(top3Infractions.getTop1());
-                    top3Infractions.setTop1(value);
-                } else if (!top3Infractions.isInTop2(value) && count > top3Infractions.getAmountOfTicketsTop2()) {
-                    top3Infractions.setTop3(top3Infractions.getTop2());
-                    top3Infractions.setTop2(value);
-                } else if (!top3Infractions.isInTop3(value) && count > top3Infractions.getAmountOfTicketsTop3()) {
-                    top3Infractions.setTop3(value);
+                if (!top3Infractions.isInTop3(value)) {
+                    if (count > top3Infractions.getAmountOfTicketsTop1()) {
+                        top3Infractions.setTop3(top3Infractions.getTop2());
+                        top3Infractions.setAmountOfTicketsTop3(top3Infractions.getAmountOfTicketsTop2());
+                        top3Infractions.setTop2(top3Infractions.getTop1());
+                        top3Infractions.setAmountOfTicketsTop2(top3Infractions.getAmountOfTicketsTop1());
+                        top3Infractions.setTop1(value);
+                        top3Infractions.setAmountOfTicketsTop1(count);
+
+                    } else if (count > top3Infractions.getAmountOfTicketsTop2()) {
+                        top3Infractions.setTop3(top3Infractions.getTop2());
+                        top3Infractions.setAmountOfTicketsTop3(top3Infractions.getAmountOfTicketsTop2());
+                        top3Infractions.setTop2(value);
+                        top3Infractions.setAmountOfTicketsTop2(count);
+                    } else if (count > top3Infractions.getAmountOfTicketsTop3()) {
+                        top3Infractions.setTop3(value);
+                        top3Infractions.setAmountOfTicketsTop3(count);
+                    }
+                } else {
+                    if (value.equals(top3Infractions.getTop1())) {
+                        top3Infractions.setAmountOfTicketsTop1(count);
+                    } else if (value.equals(top3Infractions.getTop2())) {
+                        top3Infractions.setAmountOfTicketsTop2(count);
+                        if (top3Infractions.getAmountOfTicketsTop2() > top3Infractions.getAmountOfTicketsTop1()) {
+                            String aux = top3Infractions.getTop1();
+                            int auxCount = top3Infractions.getAmountOfTicketsTop1();
+                            top3Infractions.setTop1(top3Infractions.getTop2());
+                            top3Infractions.setAmountOfTicketsTop1(top3Infractions.getAmountOfTicketsTop2());
+                            top3Infractions.setTop2(aux);
+                            top3Infractions.setAmountOfTicketsTop2(auxCount);
+                        }
+                    } else if (value.equals(top3Infractions.getTop3())) {
+                        top3Infractions.setAmountOfTicketsTop3(count);
+                        if (top3Infractions.getAmountOfTicketsTop3() > top3Infractions.getAmountOfTicketsTop2()) {
+                            String aux = top3Infractions.getTop2();
+                            int auxCount = top3Infractions.getAmountOfTicketsTop2();
+                            top3Infractions.setTop2(top3Infractions.getTop3());
+                            top3Infractions.setAmountOfTicketsTop2(top3Infractions.getAmountOfTicketsTop3());
+                            top3Infractions.setTop3(aux);
+                            top3Infractions.setAmountOfTicketsTop3(auxCount);
+                        }
+                    }
                 }
 
+
             }
+
 
             @Override
             public Top3Infractions finalizeReduce() {
