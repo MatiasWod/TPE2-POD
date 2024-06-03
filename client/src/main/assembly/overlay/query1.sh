@@ -6,4 +6,4 @@ PATH_TO_CODE_BASE=`pwd`
 
 MAIN_CLASS="ar.edu.itba.pod.queries.Query1"
 
-java -DtimeLogFile="time1.txt" $* -cp 'lib/jars/*'  $MAIN_CLASS
+java $* -cp 'lib/jars/*' $MAIN_CLASS

@@ -110,8 +110,6 @@ public abstract class QueryClient {
 
         this.ticketsPath = Path.of(inPathArgument,"tickets" + cityArgument + ".csv");
         this.infractionsPath = Path.of(inPathArgument,"infractions" + cityArgument + ".csv");
-
-
     }
 
     public void writeResults(Collection<? extends Result> results) throws IOException {
