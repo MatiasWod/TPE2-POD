@@ -12,16 +12,18 @@ public class Ticket implements DataSerializable {
     private String infractionCode;
     private String countyName;
     private double fineAmount;
+    private String agency;
 
     public Ticket() {
         //Serialization
     }
 
-    public Ticket(final String plate, final String infractionCode, final String countyName, final double fineAmount) {
+    public Ticket(String plate, String infractionCode, String countyName, double fineAmount, String agency) {
         this.plate = plate;
         this.infractionCode = infractionCode;
         this.countyName = countyName;
         this.fineAmount = fineAmount;
+        this.agency = agency;
     }
 
     public String getPlate() {
@@ -40,19 +42,25 @@ public class Ticket implements DataSerializable {
         return fineAmount;
     }
 
+    public String getAgency() {
+        return agency;
+    }
+
     @Override
     public void writeData(ObjectDataOutput objectDataOutput) throws IOException {
         objectDataOutput.writeUTF(plate);
         objectDataOutput.writeUTF(infractionCode);
         objectDataOutput.writeUTF(countyName);
         objectDataOutput.writeDouble(fineAmount);
+        objectDataOutput.writeUTF(agency);
     }
 
     @Override
     public void readData(ObjectDataInput objectDataInput) throws IOException {
         plate = objectDataInput.readUTF();
-        infractionCode = objectDataInput.readUTF();;
+        infractionCode = objectDataInput.readUTF();
         countyName = objectDataInput.readUTF();
-        fineAmount = objectDataInput.readDouble();;
+        fineAmount = objectDataInput.readDouble();
+        agency = objectDataInput.readUTF();
     }
 }

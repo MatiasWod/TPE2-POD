@@ -1,11 +1,10 @@
-package ar.edu.itba.pod.queries;
+package ar.edu.itba.pod.queries.query1;
 
 import ar.edu.itba.pod.client.QueryClient;
 import ar.edu.itba.pod.data.Infraction;
 import ar.edu.itba.pod.data.Ticket;
 import ar.edu.itba.pod.query1.Query1Mapper;
 import ar.edu.itba.pod.query1.Query1ReducerFactory;
-import com.hazelcast.core.IMap;
 import com.hazelcast.core.MultiMap;
 import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobTracker;

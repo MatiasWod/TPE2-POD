@@ -2,26 +2,20 @@ package ar.edu.itba.pod.client;
 
 import ar.edu.itba.pod.data.Infraction;
 import ar.edu.itba.pod.data.Ticket;
-import ar.edu.itba.pod.queries.Query1;
 import ar.edu.itba.pod.utils.CityCSVDatasource;
 import ar.edu.itba.pod.utils.ClientMethods;
 import ar.edu.itba.pod.utils.Result;
-import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IList;
 import com.hazelcast.core.MultiMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -78,7 +72,7 @@ public abstract class QueryClient {
         return hazelcastInstance;
     }
 
-    private void checkArguments() throws IllegalArgumentException{
+    protected void checkArguments() throws IllegalArgumentException{
         StringBuilder errors = new StringBuilder();
 
         String addressesArgument = System.getProperty(PROPERTY_ADDRESSES);
