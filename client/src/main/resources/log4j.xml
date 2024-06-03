@@ -10,7 +10,7 @@
 	</appender>
 
 	<appender name="time" class="org.apache.log4j.FileAppender">
-		<param name="file" value="${outPath}/time.txt" />
+		<param name="file" value="${outPath}/${timeLogFile}" />
 		<param name="append" value="false" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{dd/MM/yyyy HH:mm:ss:SSSS} %c{1} - %m%n"/>
