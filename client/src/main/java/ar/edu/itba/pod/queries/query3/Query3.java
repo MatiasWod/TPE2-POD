@@ -48,9 +48,9 @@ public class Query3 extends QueryClient {
                 .submit()
                 .get();
         Set<Query3Result> results = new TreeSet<>();
-        double totalFineAmount = reducedData.values().stream().mapToDouble(Double::doubleValue).sum();
+        double totalFineAmount = reducedData.values().stream().reduce(0.0,Double::sum);
         for (Map.Entry<String,Double> entry : reducedData.entrySet()){
-            results.add(new Query3Result(entry.getKey(),(entry.getValue()/totalFineAmount) * 100));
+            results.add(new Query3Result(entry.getKey(),(Math.floor((entry.getValue()/totalFineAmount) * 10000) )/100));
         }
         writeResults(results.stream().limit(numberOfResults).collect(Collectors.toList()));
     }
