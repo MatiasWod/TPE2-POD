@@ -1,11 +1,10 @@
-package ar.edu.itba.pod.queries;
+package ar.edu.itba.pod.queries.query1;
 
 import ar.edu.itba.pod.client.QueryClient;
 import ar.edu.itba.pod.data.Infraction;
 import ar.edu.itba.pod.data.Ticket;
 import ar.edu.itba.pod.query1.Query1Mapper;
 import ar.edu.itba.pod.query1.Query1ReducerFactory;
-import com.hazelcast.core.IMap;
 import com.hazelcast.core.MultiMap;
 import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobTracker;
@@ -31,8 +30,6 @@ public class Query1 extends QueryClient {
                 .reducer(new Query1ReducerFactory())
                 .submit()
                 .get();
-        Map<String,Infraction> infractionMap = getHazelcastInstance().getMap("g10-namespace-map");
-        MultiMap<String,Ticket> ticketMultiMap = getHazelcastInstance().getMultiMap("g10-namespace-multimap");
         Set<Query1Result> results = new TreeSet<>();
         for (Map.Entry<String,Integer> entry : reducedData.entrySet()) {
             results.add(new Query1Result(entry.getKey(), entry.getValue()));

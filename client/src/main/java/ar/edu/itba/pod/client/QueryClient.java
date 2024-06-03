@@ -2,26 +2,20 @@ package ar.edu.itba.pod.client;
 
 import ar.edu.itba.pod.data.Infraction;
 import ar.edu.itba.pod.data.Ticket;
-import ar.edu.itba.pod.queries.Query1;
 import ar.edu.itba.pod.utils.CityCSVDatasource;
 import ar.edu.itba.pod.utils.ClientMethods;
 import ar.edu.itba.pod.utils.Result;
-import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IList;
 import com.hazelcast.core.MultiMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -30,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public abstract class QueryClient {
-    //TODO escribir el arxhivo con los tiempos
+    //TODO escribir el archivo con los tiempos
     private static final Logger logger = LoggerFactory.getLogger(QueryClient.class);
     private static final String PROPERTY_ADDRESSES = "addresses";
     private static final String PROPERTY_CITY = "city";

@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.queries;
+package ar.edu.itba.pod.queries.query1;
 
 import ar.edu.itba.pod.utils.Result;
 
