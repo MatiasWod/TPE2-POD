@@ -22,11 +22,10 @@ public class Query4ReducerFactory implements ReducerFactory<String, String, Plat
 
             @Override
             public void reduce(String value){
-                int currentInfractionCount = PlateMap.getOrDefault(value, 0) + 1;
-                PlateMap.put(value, currentInfractionCount);
+                PlateMap.put(value, PlateMap.getOrDefault(value, 0) + 1);
 
-                if(currentInfractionCount > maxInfractionsPlate.getInfractionsAmount()){
-                    maxInfractionsPlate.setInfractionsAmount(currentInfractionCount);
+                if(PlateMap.getOrDefault(value, 0) > maxInfractionsPlate.getInfractionsAmount()){
+                    maxInfractionsPlate.setInfractionsAmount(PlateMap.getOrDefault(value, 0));
                     maxInfractionsPlate.setPlate(value);
                 }
             }
