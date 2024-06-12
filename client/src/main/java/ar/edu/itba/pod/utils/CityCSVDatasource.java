@@ -12,7 +12,7 @@ public enum CityCSVDatasource {
         public Ticket ticketFromCSV(String[] csvLine) {
             //TODO verificar que la patente se guarda correctamente
             //TODO NUEVO TICKET AGREGAR FECHA
-            return new Ticket(UUID.nameUUIDFromBytes(csvLine[1].getBytes()).toString(),
+            return new Ticket(csvLine[1],
                     csvLine[0],
                     csvLine[2],
                     csvLine[5],
