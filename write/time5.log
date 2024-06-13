@@ -1,6 +1,0 @@
-12/06/2024 22:43:34:0345 QueryClient - Starting data load.
-12/06/2024 22:43:34:0395 QueryClient - Finished data loading.
-12/06/2024 22:43:34:0396 QueryClient - Starting map-reduce job.
-12/06/2024 22:43:34:0457 QueryClient - Finished map-reduce job.
-12/06/2024 22:43:34:0458 QueryClient - Starting data destruction.
-12/06/2024 22:43:34:0466 QueryClient - Data successfully destroyed.
