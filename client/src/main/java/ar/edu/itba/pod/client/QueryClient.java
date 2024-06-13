@@ -7,6 +7,7 @@ import ar.edu.itba.pod.utils.ClientMethods;
 import ar.edu.itba.pod.utils.Result;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.MultiMap;
+import com.sun.tools.javac.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ import java.util.stream.Stream;
 
 public abstract class QueryClient {
     //TODO escribir el archivo con los tiempos
-    private static final Logger logger = LoggerFactory.getLogger(QueryClient.class);
+    private static Logger logger;
     private static final String PROPERTY_ADDRESSES = "addresses";
     private static final String PROPERTY_CITY = "city";
     private static final String PROPERTY_INPATH = "inPath";
@@ -40,6 +41,9 @@ public abstract class QueryClient {
 
     public QueryClient() {
         int status = 0;
+
+        System.setProperty("queryNumber", getQueryNumber());
+        logger = LoggerFactory.getLogger(QueryClient.class);
         try{
             checkArguments();
             this.hazelcastInstance = ClientMethods.clientConfiguration(this.addresses);
