@@ -11,16 +11,11 @@ import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class Query5 extends QueryClient {
-
-    private int numberOfResults;
-
     public Query5() {
         super();
     }
@@ -35,13 +30,48 @@ public class Query5 extends QueryClient {
                 .reducer(new Query5ReducerFactory())
                 .submit()
                 .get();
-        Set<Query5Result> results = new TreeSet<>();
-        double totalFineAmount = reducedData.values().stream().reduce(0.0,Double::sum);
-        for (Map.Entry<String,Double> entry : reducedData.entrySet()){
-            results.add(new Query5Result(entry.getKey(),(Math.floor((entry.getValue()/totalFineAmount) * 10000) )/100));
-        }
-        writeResults(results.stream().limit(numberOfResults).collect(Collectors.toList()));
+
+        // Me fijo a que grupo pertenece cada infraccion
+        Map<Integer, List<String>> infractionsByGroup = getInfractionsByGroup(reducedData);
+
+        Set<Query5Result> results = formatMapIntoQueryResults(infractionsByGroup);
+
+        writeResults(results);
     }
+
+    private Map<Integer, List<String>> getInfractionsByGroup(Map<String, Double> data) {
+        Map<Integer, List<String>> map = new HashMap<>();
+
+        for (Map.Entry<String, Double> entry : data.entrySet()) {
+            Integer groupValue = entry.getValue().intValue() / 100;
+
+            map.putIfAbsent(groupValue, new ArrayList<>());
+            map.get(groupValue).add(entry.getKey());
+        }
+        return map;
+    }
+
+    private Set<Query5Result> formatMapIntoQueryResults(Map<Integer, List<String>> infractionsByGroup) {
+        Set<Query5Result> results = new TreeSet<>();
+
+        for (Map.Entry<Integer, List<String>> entry : infractionsByGroup.entrySet()) {
+            List<String> list = entry.getValue();
+
+            // If belongs to group 0-100
+            if (entry.getKey() == 0) continue;
+
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = i + 1; j <  list.size(); j++) {
+                    // If infraction A != Infraction B
+                    if (!list.get(i).equals(list.get(j))) {
+                        results.add(new Query5Result(entry.getKey() * 100, list.get(i), list.get(j)));
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
 
     @Override
     public String getQueryNumber() {
