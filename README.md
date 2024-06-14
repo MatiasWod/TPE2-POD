@@ -69,7 +69,7 @@ tar -xf <file.tar.gz>
 Then, give all executables permission to be executed:
 
 ```Bash
-chmod u+x ./tpe2-g10-client-2024.1Q/*Client.sh ./tpe2-g10-server-2024.1Q/server.sh
+chmod u+x ./tpe2-g10-client-2024.1Q/query*.sh ./tpe2-g10-server-2024.1Q/server.sh
 ```
 
 ---
