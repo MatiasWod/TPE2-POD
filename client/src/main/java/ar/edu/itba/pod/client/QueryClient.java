@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public abstract class QueryClient {
-    //TODO escribir el archivo con los tiempos
     private static final Logger logger = LoggerFactory.getLogger(QueryClient.class);
     private static final String PROPERTY_ADDRESSES = "addresses";
     private static final String PROPERTY_CITY = "city";
