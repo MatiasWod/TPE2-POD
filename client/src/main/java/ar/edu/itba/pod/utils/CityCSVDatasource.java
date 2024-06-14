@@ -10,8 +10,7 @@ public enum CityCSVDatasource {
     CHI{
         @Override
         public Ticket ticketFromCSV(String[] csvLine) {
-            //TODO verificar que la patente se guarda correctamente
-            //TODO NUEVO TICKET AGREGAR FECHA
+
             return new Ticket(csvLine[1],
                     csvLine[0],
                     csvLine[2],

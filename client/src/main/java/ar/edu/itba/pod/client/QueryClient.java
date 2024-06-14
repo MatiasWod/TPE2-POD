@@ -43,12 +43,21 @@ public abstract class QueryClient {
         try{
             checkArguments();
             this.hazelcastInstance = ClientMethods.clientConfiguration(this.addresses);
+
+            long startTime, endTime;
+
             logger.info("Starting data load.");
+            startTime = System.currentTimeMillis();
             loadData();
-            logger.info("Finished data loading.");
+            endTime = System.currentTimeMillis();
+            logger.info("Finished data loading. Time taken: {} ms", endTime - startTime);
+
             logger.info("Starting map-reduce job.");
+            startTime = System.currentTimeMillis();
             runQuery();
-            logger.info("Finished map-reduce job.");
+            endTime = System.currentTimeMillis();
+            logger.info("Finished map-reduce job. Time taken: {} ms", endTime - startTime);
+
         }catch (IllegalArgumentException e) {
             System.err.println("Oops! Invalid arguments were sent:\n" + e.getMessage());
             logger.error("Invalid arguments were sent.");
@@ -130,6 +139,46 @@ public abstract class QueryClient {
         hazelcastInstance.getMap("g10-namespace-map").clear();
         hazelcastInstance.getMultiMap("g10-namespace-multimap").clear();
     }
+
+/*
+
+    DATA LOAD WITHOUT THREADING
+
+    private void loadData() {
+        if (hazelcastInstance == null) {
+            return;
+        }
+
+        loadTickets(hazelcastInstance.getMultiMap("g10-namespace-multimap"), city, ticketsPath);
+        loadInfractions(hazelcastInstance.getMap("g10-namespace-map"), city, infractionsPath);
+    }
+
+    private void loadTickets(MultiMap<String, Ticket> multiMap, String city, Path path) {
+        try (Stream<String> lines = Files.lines(path).skip(1).parallel()) {
+            CityCSVDatasource cityCSVDatasource = CityCSVDatasource.valueOf(city);
+            lines.forEach(line -> {
+                String[] fields = line.split(";");
+                multiMap.put(fields[2], cityCSVDatasource.ticketFromCSV(fields));
+            });
+        } catch (IOException e) {
+            logger.error("Error loading tickets data.");
+            logger.error(e.getMessage());
+        }
+    }
+
+    private void loadInfractions(Map<String, Infraction> map, String city, Path path) {
+        try (Stream<String> lines = Files.lines(path).skip(1).parallel()) {
+            CityCSVDatasource cityCSVDatasource = CityCSVDatasource.valueOf(city);
+            lines.forEach(line -> {
+                String[] fields = line.split(";");
+                map.put(fields[0], cityCSVDatasource.infractionFromCSV(fields));
+            });
+        } catch (IOException e) {
+            logger.error("Error loading infractions data.");
+            logger.error(e.getMessage());
+        }
+    }
+*/
 
     private void loadData(){
         if (hazelcastInstance == null){
